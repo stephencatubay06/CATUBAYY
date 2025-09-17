@@ -1,0 +1,72 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package pseudolinkedlist;
+
+public class PseudoLinkedList {
+    private Object[] elements;  
+    private int size;           
+
+    public PseudoLinkedList(int initialCapacity) {
+        elements = new Object[initialCapacity];
+        size = 0;
+    }
+
+    public void add(Object element) {
+        if (size == elements.length) {
+            resize();  
+        }
+        elements[size++] = element;  
+    }
+
+    public Object poll() {
+        if (size == 0) {
+            return null;  
+        }
+        Object firstElement = elements[0];
+        for (int i = 1; i < size; i++) {
+            elements[i - 1] = elements[i];
+        }
+        elements[--size] = null;  
+        return firstElement;
+    }
+
+    public Object peek() {
+        if (size == 0) {
+            return null;  
+        }
+        return elements[0];
+    }
+
+    
+    public Object pop() {
+        return poll();  
+    }
+
+   
+    private void resize() {
+        int newCapacity = elements.length * 2;
+        Object[] newElements = new Object[newCapacity];
+        System.arraycopy(elements, 0, newElements, 0, elements.length);
+        elements = newElements;
+    }
+
+    
+    public int size() {
+        return size;
+    }
+
+    public static void main(String[] args) {
+        PseudoLinkedList list = new PseudoLinkedList(2);
+        list.add(10);
+        list.add(20);
+        list.add(30);  
+
+        System.out.println("Peek: " + list.peek());  // Output: 10
+        System.out.println("Poll: " + list.poll());  // Output: 10
+        System.out.println("Pop: " + list.pop());    // Output: 20
+        System.out.println("Size: " + list.size());  // Output: 1
+    }
+}
+
